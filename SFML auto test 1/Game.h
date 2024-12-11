@@ -35,12 +35,15 @@ private:
 	sf::Sprite sprite_player_;
 	sf::Texture texture_coin;
 	sf::Sprite sprite_coin;
+	sf::Sprite sprite_coin2;
 	sf::Font font_end_game_;
 	sf::Text text_end_game_;
 	sf::Event event_;
 
 	//Item item_;
 	Player player_;
+
+	std::vector<sf::Sprite> Sprite_Coin_Vector;
 
 
 	sf::Clock clock_;

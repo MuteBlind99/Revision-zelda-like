@@ -19,8 +19,10 @@ Game::Game()
 	texture_coin.loadFromFile("C:\\Users\\forna\\source\\repos\\SFML auto test 1\\asset\\Tiles\\tile_0089.png");
 
 	sprite_coin.setTexture(texture_coin);
+	sprite_coin2.setTexture(texture_coin);
 	/*sprite_coin.setPosition(3 * 50,3 * 50);*/
 	sprite_coin.setScale(2, 2);
+	sprite_coin2.setScale(2, 2);
 
 	window_.create(sf::VideoMode(texture_map.getSize().x * sprite_map.getScale().x*8, texture_map.getSize().y * sprite_map.getScale().x *8), "Dungeon test");
 	std::cout << window_.getSize().x << "(x) " << window_.getSize().y << "(y)" << '\n';
@@ -30,6 +32,10 @@ Game::Game()
 	//item_.setPosition(32 * 4, 32 * 4);
 
 	sprite_coin.setPosition(32 * 4, 32 * 4);
+	sprite_coin2.setPosition(32 * 2, 32 * 1);
+
+	Sprite_Coin_Vector.emplace_back(sprite_coin);
+	Sprite_Coin_Vector.emplace_back(sprite_coin2);
 }
 
 void Game::GameLoop()
@@ -40,7 +46,12 @@ void Game::GameLoop()
 
 		DrawMap();
 		DrawPlayer();
-		window_.draw(sprite_coin);
+		//Boucle simple Sprite_Coin_Vector
+		for (auto i : Sprite_Coin_Vector)
+		{
+			window_.draw(i);
+		}
+
 		//window_.draw(item_);
 		//DrawCoin();
 
@@ -146,8 +157,11 @@ void Game::DrawPlayer()
 void Game::DrawCoin()
 {
 	//sprite_coin.setOrigin(1,0);
-	
-	window_.draw(sprite_coin);
+
+	for (auto i : Sprite_Coin_Vector)
+	{
+		window_.draw(i);
+	}
 }
 
 void Game::Event()
@@ -228,7 +242,16 @@ void Game::CheckMove()
 		
 	}
 
-	if (player_.getPosition() == sprite_coin.getPosition())
+	for (int idx = 0; idx < Sprite_Coin_Vector.size(); ++idx)
+	{
+		if (player_.getPosition() == Sprite_Coin_Vector[idx].getPosition())
+		{
+			Sprite_Coin_Vector.erase(Sprite_Coin_Vector.begin() + idx);
+		}
+	}
+
+
+	if (Sprite_Coin_Vector.empty())
 	{
 		std::cout << "End" << std::endl;
 	}
